@@ -6,9 +6,14 @@ class SignUp extends StatefulWidget {
   _SignUpState createState() => _SignUpState();
 }
 
+final formKey = GlobalKey<FormState>();
 TextEditingController usernameTextEditingController = TextEditingController();
 TextEditingController emailTextEditingController = TextEditingController();
 TextEditingController passwordTextEditingController = TextEditingController();
+
+signMeUp(){
+  if(formKey.currentState.validate());
+}
 
 class _SignUpState extends State<SignUp> {
   @override
@@ -22,18 +27,33 @@ class _SignUpState extends State<SignUp> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(
-                controller: usernameTextEditingController,
-                  style: simpleTextStyle(),
-                  decoration: textfieldInputDecoration("Username")),
-              TextField(
-                controller: emailTextEditingController,
-                  style: simpleTextStyle(),
-                  decoration: textfieldInputDecoration("Email")),
-              TextField(
-                controller: passwordTextEditingController,
-                style: simpleTextStyle(),
-                decoration: textfieldInputDecoration('Password'),
+              Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      validator: (val){
+                        return val.isEmpty || val.length < 2? "Enter a valid username": null;
+                      },
+                        controller: usernameTextEditingController,
+                        style: simpleTextStyle(),
+                        decoration: textfieldInputDecoration("Username")),
+                    TextFormField(
+                      validator: (val){
+                        return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val)? null:"Please Enter a valid password";
+                      },
+                        controller: emailTextEditingController,
+                        style: simpleTextStyle(),
+                        decoration: textfieldInputDecoration("Email")),
+                    TextFormField(
+                      obscureText: true,
+                      validator: (val){return val.length > 6 ? null:"Passwod must be more than 6 characters";},
+                      controller: passwordTextEditingController,
+                      style: simpleTextStyle(),
+                      decoration: textfieldInputDecoration('Password'),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 16,
@@ -51,19 +71,25 @@ class _SignUpState extends State<SignUp> {
               SizedBox(
                 height: 8,
               ),
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(vertical: 20),
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [
-                      const Color(0xff7863F0),
-                      const Color(0xff5648AA)
-                    ]),
-                    borderRadius: BorderRadius.circular(30)),
-                child: Text(
-                  'Sign Up',
-                  style: TextStyle(fontSize: 17, color: Colors.white),
+              GestureDetector(
+                onTap: (){
+                  //TODO
+                  signMeUp();
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                        const Color(0xff7863F0),
+                        const Color(0xff5648AA)
+                      ]),
+                      borderRadius: BorderRadius.circular(30)),
+                  child: Text(
+                    'Sign Up',
+                    style: TextStyle(fontSize: 17, color: Colors.white),
+                  ),
                 ),
               ),
               SizedBox(
