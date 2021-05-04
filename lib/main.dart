@@ -1,4 +1,5 @@
 import 'package:chatty_app/views/signin.dart';
+import 'package:chatty_app/views/signup.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: SignIn(),
+      home: SignUp(),
 
     );
   }
