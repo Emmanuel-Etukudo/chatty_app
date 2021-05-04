@@ -6,6 +6,10 @@ class SignUp extends StatefulWidget {
   _SignUpState createState() => _SignUpState();
 }
 
+TextEditingController usernameTextEditingController = TextEditingController();
+TextEditingController emailTextEditingController = TextEditingController();
+TextEditingController passwordTextEditingController = TextEditingController();
+
 class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
@@ -19,12 +23,15 @@ class _SignUpState extends State<SignUp> {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
+                controller: usernameTextEditingController,
                   style: simpleTextStyle(),
                   decoration: textfieldInputDecoration("Username")),
               TextField(
+                controller: emailTextEditingController,
                   style: simpleTextStyle(),
                   decoration: textfieldInputDecoration("Email")),
               TextField(
+                controller: passwordTextEditingController,
                 style: simpleTextStyle(),
                 decoration: textfieldInputDecoration('Password'),
               ),
