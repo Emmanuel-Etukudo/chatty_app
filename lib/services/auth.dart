@@ -27,4 +27,20 @@ class AuthMethods{
     }
   }
 
+  Future resetPassword(String email) async{
+    try{
+      return await _auth.sendPasswordResetEmail(email: email);
+    }catch(e){
+      print(e.toString());
+    }
+  }
+
+  Future signOut() async{
+    try{
+      return await _auth.signOut();
+    }catch(e){
+      print(e.toString());
+    }
+  }
+
 }
