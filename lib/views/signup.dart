@@ -6,21 +6,37 @@ class SignUp extends StatefulWidget {
   _SignUpState createState() => _SignUpState();
 }
 
-final formKey = GlobalKey<FormState>();
-TextEditingController usernameTextEditingController = TextEditingController();
-TextEditingController emailTextEditingController = TextEditingController();
-TextEditingController passwordTextEditingController = TextEditingController();
 
-signMeUp() {
-  if (formKey.currentState.validate()) ;
-}
 
 class _SignUpState extends State<SignUp> {
+  bool isLoading = false;
+
+  final formKey = GlobalKey<FormState>();
+  TextEditingController usernameTextEditingController = TextEditingController();
+  TextEditingController emailTextEditingController = TextEditingController();
+  TextEditingController passwordTextEditingController = TextEditingController();
+
+  signMeUp() {
+    if (formKey.currentState.validate()){
+      setState(() {
+        isLoading = true;
+      });
+
+    };
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarMain(context),
-      body: SingleChildScrollView(
+      body: isLoading ? Container(
+        child: Center(child: CircularProgressIndicator(
+          backgroundColor: Color(0xff5648AA),
+          strokeWidth: 8.0,
+        )),
+      ):
+      SingleChildScrollView(
         child: Container(
           alignment: Alignment.bottomCenter,
           child: Container(
