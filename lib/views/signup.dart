@@ -11,8 +11,8 @@ TextEditingController usernameTextEditingController = TextEditingController();
 TextEditingController emailTextEditingController = TextEditingController();
 TextEditingController passwordTextEditingController = TextEditingController();
 
-signMeUp(){
-  if(formKey.currentState.validate());
+signMeUp() {
+  if (formKey.currentState.validate()) ;
 }
 
 class _SignUpState extends State<SignUp> {
@@ -28,27 +28,45 @@ class _SignUpState extends State<SignUp> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  child: Image.asset(
+                    'assets/images/signupimage.png',
+                    height: 200,
+                    width: 200,
+                  ),
+                ),
                 Form(
                   key: formKey,
                   child: Column(
                     children: [
                       TextFormField(
-                        validator: (val){
-                          return val.isEmpty || val.length < 2? "Enter a valid username": null;
-                        },
+                          validator: (val) {
+                            return val.isEmpty || val.length < 2
+                                ? "Enter a valid username"
+                                : null;
+                          },
                           controller: usernameTextEditingController,
                           style: simpleTextStyle(),
                           decoration: textfieldInputDecoration("Username")),
                       TextFormField(
-                        validator: (val){
-                          return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val)? null:"Please Enter a valid password";
-                        },
+                          validator: (val) {
+                            return RegExp(
+                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                    .hasMatch(val)
+                                ? null
+                                : "Please Enter a valid password";
+                          },
                           controller: emailTextEditingController,
                           style: simpleTextStyle(),
                           decoration: textfieldInputDecoration("Email")),
                       TextFormField(
                         obscureText: true,
-                        validator: (val){return val.length > 6 ? null:"Passwod must be more than 6 characters";},
+                        validator: (val) {
+                          return val.length > 6
+                              ? null
+                              : "Passwod must be more than 6 characters";
+                        },
                         controller: passwordTextEditingController,
                         style: simpleTextStyle(),
                         decoration: textfieldInputDecoration('Password'),
@@ -73,7 +91,7 @@ class _SignUpState extends State<SignUp> {
                   height: 8,
                 ),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     signMeUp();
                   },
                   child: Container(
