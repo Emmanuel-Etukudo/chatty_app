@@ -3,11 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
+
+  final Function toggle;
+  SignIn(this.toggle);
+
   @override
   _SignInState createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,11 +88,19 @@ class _SignInState extends State<SignIn> {
                       "Don't have an account? ",
                       style: mediumTextStyle(),
                     ),
-                    Text('Register now',
-                        style: TextStyle(
-                            fontSize: 17,
-                            color: Colors.black,
-                            decoration: TextDecoration.underline))
+                    GestureDetector(
+                      onTap: (){
+                        widget.toggle();
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 8),
+                        child: Text('Register now',
+                            style: TextStyle(
+                                fontSize: 17,
+                                color: Colors.black,
+                                decoration: TextDecoration.underline)),
+                      ),
+                    )
                   ],
                 ),
                 SizedBox(

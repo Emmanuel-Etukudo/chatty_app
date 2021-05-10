@@ -4,6 +4,10 @@ import 'package:chatty_app/widgets/widget.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
+
+  final Function toggle;
+  SignUp(this.toggle);
+
   @override
   _SignUpState createState() => _SignUpState();
 }
@@ -25,7 +29,7 @@ class _SignUpState extends State<SignUp> {
       authMethods
           .signUpWithEmailAndPassword(emailTextEditingController.text,
               passwordTextEditingController.text)
-          .then((value) => print("$value"));
+          .then((value) => print("${value.uid}"));
 
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => ChatRoomScreen()));
@@ -161,11 +165,19 @@ class _SignUpState extends State<SignUp> {
                             "Already have an account? ",
                             style: mediumTextStyle(),
                           ),
-                          Text('SignIn now',
-                              style: TextStyle(
-                                  fontSize: 17,
-                                  color: Colors.black,
-                                  decoration: TextDecoration.underline))
+                          GestureDetector(
+                            onTap: (){
+                              widget.toggle();
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 8),
+                              child: Text('SignIn now',
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      color: Colors.black,
+                                      decoration: TextDecoration.underline)),
+                            ),
+                          )
                         ],
                       ),
                       SizedBox(
