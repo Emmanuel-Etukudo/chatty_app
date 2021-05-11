@@ -1,10 +1,10 @@
 import 'package:chatty_app/services/auth.dart';
+import 'package:chatty_app/services/database.dart';
 import 'package:chatty_app/views/chatRoomScreen.dart';
 import 'package:chatty_app/widgets/widget.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
-
   final Function toggle;
   SignUp(this.toggle);
 
@@ -15,6 +15,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   bool isLoading = false;
   AuthMethods authMethods = AuthMethods();
+  DatabaseMethods databaseMethods = DatabaseMethods();
 
   final formKey = GlobalKey<FormState>();
   TextEditingController usernameTextEditingController = TextEditingController();
@@ -22,6 +23,12 @@ class _SignUpState extends State<SignUp> {
   TextEditingController passwordTextEditingController = TextEditingController();
 
   signMeUp() {
+    //map variable to store email and password
+    Map<String, String> userInfoMap = {
+      "name": usernameTextEditingController.text,
+      "email": emailTextEditingController.text,
+    };
+
     if (formKey.currentState.validate()) {
       setState(() {
         isLoading = true;
@@ -30,6 +37,9 @@ class _SignUpState extends State<SignUp> {
           .signUpWithEmailAndPassword(emailTextEditingController.text,
               passwordTextEditingController.text)
           .then((value) => print("${value.uid}"));
+
+      //calling function to upload user info
+      databaseMethods.uploadUserInfo(userInfoMap);
 
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => ChatRoomScreen()));
@@ -166,7 +176,7 @@ class _SignUpState extends State<SignUp> {
                             style: mediumTextStyle(),
                           ),
                           GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               widget.toggle();
                             },
                             child: Container(

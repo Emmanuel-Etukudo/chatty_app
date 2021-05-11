@@ -7,6 +7,8 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  TextEditingController searchTextEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,11 +17,13 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 24,vertical: 16),
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               color: Color(0xff897fc4),
               child: Row(
                 children: [
-                  Expanded(child: TextField(
+                  Expanded(
+                      child: TextField(
+                        controller: searchTextEditingController,
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -32,16 +36,14 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                   )),
                   Container(
-                    height: 40,
+                      height: 40,
                       width: 40,
                       padding: EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            const Color(0x36ffffff),
-                            const Color(0x0fffffff)
-                          ]
-                        ),
+                        gradient: LinearGradient(colors: [
+                          const Color(0x36ffffff),
+                          const Color(0x0fffffff)
+                        ]),
                         borderRadius: BorderRadius.circular(40),
                       ),
                       child: Image.asset('assets/images/search_white.png'))
