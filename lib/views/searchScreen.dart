@@ -1,3 +1,4 @@
+import 'package:chatty_app/services/database.dart';
 import 'package:chatty_app/widgets/widget.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,11 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+
+  DatabaseMethods databaseMethods = DatabaseMethods();
+
   TextEditingController searchTextEditingController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,18 +40,25 @@ class _SearchScreenState extends State<SearchScreen> {
                       border: InputBorder.none,
                     ),
                   )),
-                  Container(
-                      height: 40,
-                      width: 40,
-                      padding: EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: [
-                          const Color(0x36ffffff),
-                          const Color(0x0fffffff)
-                        ]),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      child: Image.asset('assets/images/search_white.png'))
+                  GestureDetector(
+                    onTap: (){
+                      databaseMethods.getUserByUsername(searchTextEditingController.text).then((val){
+                        print(val.toString());
+                      });
+                    },
+                    child: Container(
+                        height: 40,
+                        width: 40,
+                        padding: EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [
+                            const Color(0x36ffffff),
+                            const Color(0x0fffffff)
+                          ]),
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        child: Image.asset('assets/images/search_white.png')),
+                  )
                 ],
               ),
             ),
