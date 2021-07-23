@@ -33,6 +33,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   createChatroomAndSendToChatConversation({String userName}) {
 
+    print("${Constants.myName}");
     if(userName != Constants.myName){
       String chatRoomId = getChatRoomId(userName, Constants.myName);
 

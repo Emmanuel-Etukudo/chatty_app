@@ -9,15 +9,15 @@ class DatabaseMethods {
   }
 
   //search firestore for user name
-  getUserByUsername(String username) {
-    return FirebaseFirestore.instance
+  getUserByUsername(String username) async{
+    return await FirebaseFirestore.instance
         .collection("users")
         .where("name", isEqualTo: username)
         .get();
   }
 
-  getUserByUserEmail(String userEmail) {
-    return FirebaseFirestore.instance
+  getUserByUserEmail(String userEmail) async{
+    return await FirebaseFirestore.instance
         .collection("users")
         .where("email", isEqualTo: userEmail)
         .get();
