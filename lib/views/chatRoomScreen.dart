@@ -1,4 +1,6 @@
 import 'package:chatty_app/helper/authenticate.dart';
+import 'package:chatty_app/helper/constants.dart';
+import 'package:chatty_app/helper/helperfunctions.dart';
 import 'package:chatty_app/services/auth.dart';
 import 'package:chatty_app/views/searchScreen.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +10,21 @@ class ChatRoomScreen extends StatefulWidget {
   _ChatRoomScreenState createState() => _ChatRoomScreenState();
 }
 
+
 class _ChatRoomScreenState extends State<ChatRoomScreen> {
+
   AuthMethods authMethods = AuthMethods();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  getUserInfo() async{
+    Constants.myName = await HelperFunctions.getUserNameSharedPreference();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
