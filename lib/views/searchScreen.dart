@@ -32,9 +32,8 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   createChatroomAndSendToChatConversation({String userName}) {
-
     print("${Constants.myName}");
-    if(userName != Constants.myName){
+    if (userName != Constants.myName) {
       String chatRoomId = getChatRoomId(userName, Constants.myName);
 
       List<String> users = [userName, Constants.myName];
@@ -44,14 +43,15 @@ class _SearchScreenState extends State<SearchScreen> {
       };
       DatabaseMethods().createChatRoom(chatRoomId, chatRoomMap);
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ConversationScreen()));
-    }else{
+          context,
+          MaterialPageRoute(
+              builder: (context) => ConversationScreen(chatRoomId)));
+    } else {
       print("You cannot send a message to yourself");
     }
-
   }
 
-  Widget SearchTile({String userName, String userEmail}){
+  Widget SearchTile({String userName, String userEmail}) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
       child: Row(
@@ -72,9 +72,7 @@ class _SearchScreenState extends State<SearchScreen> {
           Spacer(),
           GestureDetector(
             onTap: () {
-              createChatroomAndSendToChatConversation(
-                  userName: userName
-                  );
+              createChatroomAndSendToChatConversation(userName: userName);
             },
             child: Container(
               decoration: BoxDecoration(
@@ -92,7 +90,6 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
     );
   }
-
 
   Widget searchList() {
     return searchSnapshot != null
@@ -161,8 +158,6 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
-
-
 
 getChatRoomId(String a, String b) {
   if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
