@@ -1,6 +1,7 @@
 import 'package:chatty_app/helper/constants.dart';
 import 'package:chatty_app/services/database.dart';
 import 'package:chatty_app/widgets/widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ConversationScreen extends StatefulWidget {
@@ -8,44 +9,47 @@ class ConversationScreen extends StatefulWidget {
   final String chatRoomId;
   ConversationScreen(this.chatRoomId);
 
-
   @override
   _ConversationScreenState createState() => _ConversationScreenState();
 }
 
 class _ConversationScreenState extends State<ConversationScreen> {
-
   Stream chatMessagesStream;
   DatabaseMethods databaseMethods = DatabaseMethods();
   TextEditingController messageController = TextEditingController();
 
-  Widget chatMessageList(){
+  Widget chatMessageList() {
     return StreamBuilder(
         stream: chatMessagesStream,
-        builder: (context, snapshot){
-          return snapshot.hasData ? ListView.builder(
-              itemCount: snapshot.data.docs.length,
-              itemBuilder: (context, index){
-                return MessageTile(snapshot.data.docs[index].data()["message"]);
-          }) : Container();
+        builder: (context, snapshot) {
+          return snapshot.hasData
+              ? ListView.builder(
+                  itemCount: snapshot.data.docs.length,
+                  itemBuilder: (context, index) {
+                    return MessageTile(
+                        snapshot.data.docs[index].data()["message"],
+                        snapshot.data.docs[index].data()["sendBy"] ==
+                            Constants.myName);
+                  })
+              : Container();
         });
   }
 
-  sendMessage(){
-    if(messageController.text.isNotEmpty){
-      Map < String, dynamic> messagesMap = {
-        "message" : messageController.text,
-        "sendBy" : Constants.myName,
-        "time" : DateTime.now().millisecondsSinceEpoch
+  sendMessage() {
+    if (messageController.text.isNotEmpty) {
+      Map<String, dynamic> messagesMap = {
+        "message": messageController.text,
+        "sendBy": Constants.myName,
+        "time": DateTime.now().millisecondsSinceEpoch
       };
-    databaseMethods.addConversationMessages(widget.chatRoomId, messagesMap);
-    messageController.text = "";
+      databaseMethods.addConversationMessages(widget.chatRoomId, messagesMap);
+      messageController.text = "";
     }
   }
 
   @override
   void initState() {
-    databaseMethods.getConversationMessages(widget.chatRoomId).then((value){
+    databaseMethods.getConversationMessages(widget.chatRoomId).then((value) {
       setState(() {
         chatMessagesStream = value;
       });
@@ -70,18 +74,18 @@ class _ConversationScreenState extends State<ConversationScreen> {
                   children: [
                     Expanded(
                         child: TextField(
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                          controller: messageController,
-                          decoration: InputDecoration(
-                            hintText: 'Message....',
-                            hintStyle: TextStyle(
-                              color: Colors.white54,
-                            ),
-                            border: InputBorder.none,
-                          ),
-                        )),
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                      controller: messageController,
+                      decoration: InputDecoration(
+                        hintText: 'Message....',
+                        hintStyle: TextStyle(
+                          color: Colors.white54,
+                        ),
+                        border: InputBorder.none,
+                      ),
+                    )),
                     GestureDetector(
                       onTap: () {
                         sendMessage();
@@ -112,13 +116,32 @@ class _ConversationScreenState extends State<ConversationScreen> {
 
 class MessageTile extends StatelessWidget {
   final String message;
-  MessageTile(this.message);
+  bool isSendByMe;
+  MessageTile(this.message, this.isSendByMe);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(message, style: mediumTextStyle(),),
+      padding: EdgeInsets.only(left: isSendByMe ? 0 : 24, right: isSendByMe ? 24 : 0 ),
+      width: MediaQuery.of(context).size.width,
+      alignment: isSendByMe ? Alignment.centerRight :Alignment.centerLeft,
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 8),
+        padding: EdgeInsets.symmetric(horizontal: 24,vertical: 16),
+        decoration: BoxDecoration(
+          color: Color(0xffE5E4E9),
+          borderRadius: isSendByMe ? BorderRadius.only(
+            topLeft: Radius.circular(23),
+            topRight: Radius.circular(23),
+            bottomLeft: Radius.circular(23)
+          ) : BorderRadius.only(
+              topLeft: Radius.circular(23),
+              topRight: Radius.circular(23),
+              bottomRight: Radius.circular(23)
+          )
+        ),
+        child: Text(message, style: TextStyle(fontSize: 17, color: Colors.black)),
+      ),
     );
   }
 }
-
