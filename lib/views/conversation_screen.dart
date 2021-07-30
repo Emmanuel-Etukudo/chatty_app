@@ -23,11 +23,11 @@ class _ConversationScreenState extends State<ConversationScreen> {
     return StreamBuilder(
         stream: chatMessagesStream,
         builder: (context, snapshot){
-          return ListView.builder(
+          return snapshot.hasData ? ListView.builder(
               itemCount: snapshot.data.docs.length,
               itemBuilder: (context, index){
                 return MessageTile(snapshot.data.docs[index].data()["message"]);
-          });
+          }) : Container();
         });
   }
 
