@@ -52,6 +52,7 @@ class DatabaseMethods {
         .collection("ChatRoom")
         .doc(chatRoomId)
         .collection("chats")
+        .orderBy("time", descending: false)
         .snapshots();
     //.snapshots();
   }

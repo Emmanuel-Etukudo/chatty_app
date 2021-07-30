@@ -36,6 +36,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
       Map < String, dynamic> messagesMap = {
         "message" : messageController.text,
         "sendBy" : Constants.myName,
+        "time" : DateTime.now().millisecondsSinceEpoch
       };
     databaseMethods.addConversationMessages(widget.chatRoomId, messagesMap);
     messageController.text = "";
