@@ -13,24 +13,43 @@ class ConversationScreen extends StatefulWidget {
   _ConversationScreenState createState() => _ConversationScreenState();
 }
 
-
 class _ConversationScreenState extends State<ConversationScreen> {
 
+  Stream chatMessagesStream;
   DatabaseMethods databaseMethods = DatabaseMethods();
   TextEditingController messageController = TextEditingController();
 
+  Widget chatMessageList(){
+    return StreamBuilder(
+        stream: chatMessagesStream,
+        builder: (context, snapshot){
+          return ListView.builder(
+              itemCount: snapshot.data.docs.length,
+              itemBuilder: (context, index){
+                return MessageTile(snapshot.data.docs[index].data()["message"]);
+          });
+        });
+  }
+
   sendMessage(){
     if(messageController.text.isNotEmpty){
-      Map < String, String> messagesMap = {
+      Map < String, dynamic> messagesMap = {
         "message" : messageController.text,
-        "sendBy" : Constants.myName
+        "sendBy" : Constants.myName,
       };
-    databaseMethods.getConversationMessages(widget.chatRoomId, messagesMap);
+    databaseMethods.addConversationMessages(widget.chatRoomId, messagesMap);
+    messageController.text = "";
     }
   }
 
-  Widget chatMessageList(){
-
+  @override
+  void initState() {
+    databaseMethods.getConversationMessages(widget.chatRoomId).then((value){
+      setState(() {
+        chatMessagesStream = value;
+      });
+    });
+    super.initState();
   }
 
   @override
@@ -40,6 +59,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
       body: Container(
         child: Stack(
           children: [
+            Container(child: chatMessageList()),
             Container(
               alignment: Alignment.bottomCenter,
               child: Container(
@@ -88,3 +108,16 @@ class _ConversationScreenState extends State<ConversationScreen> {
     );
   }
 }
+
+class MessageTile extends StatelessWidget {
+  final String message;
+  MessageTile(this.message);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Text(message, style: mediumTextStyle(),),
+    );
+  }
+}
+
