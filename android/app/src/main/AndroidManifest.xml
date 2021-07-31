@@ -2,7 +2,7 @@
     package="com.example.chatty_app">
    <application
         android:label="chatty_app"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher_chatty">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
