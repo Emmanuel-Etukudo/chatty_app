@@ -66,6 +66,15 @@ class _SignInState extends State<SignIn> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                Container(
+                  padding:
+                  EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  child: Image.asset(
+                    'assets/images/signinimage.png',
+                    height: 200,
+                    width: 200,
+                  ),
+                ),
                 Form(
                   key: formKey,
                   child: Column(children: [
