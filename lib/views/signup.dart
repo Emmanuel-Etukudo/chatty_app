@@ -1,3 +1,4 @@
+import 'package:chatty_app/helper/helperfunctions.dart';
 import 'package:chatty_app/services/auth.dart';
 import 'package:chatty_app/services/database.dart';
 import 'package:chatty_app/views/chatRoomScreen.dart';
@@ -29,6 +30,9 @@ class _SignUpState extends State<SignUp> {
       "email": emailTextEditingController.text,
     };
 
+    HelperFunctions.saveUserEmailSharedPreference(emailTextEditingController.text);
+    HelperFunctions.saveUserNameSharedPreference(usernameTextEditingController.text);
+
     if (formKey.currentState.validate()) {
       setState(() {
         isLoading = true;
@@ -41,6 +45,7 @@ class _SignUpState extends State<SignUp> {
       //calling function to upload user info
       databaseMethods.uploadUserInfo(userInfoMap);
 
+      HelperFunctions.saveUserLoggedInSharedPreference(true);
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => ChatRoomScreen()));
     }
