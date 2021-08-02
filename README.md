@@ -18,7 +18,7 @@ Built this personal project to learn and apply the following
 - Using Stream & Stream builder
 
 ## Demo
-![Gif Demo](https://media.giphy.com/media/Wb7MIIn6Pk07X93ws4/giphy.gif)
+![Demo](https://user-images.githubusercontent.com/26837230/127844790-1791c719-4295-4526-998d-8f339cbfd147.mp4)
 
 ## Features
 - Sign Up
