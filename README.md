@@ -8,6 +8,15 @@ Fully Functioning Chat App with Flutter & Firebase
 ![Tweet](https://img.shields.io/twitter/url?style=flat-square&logo=twitter&url=https%3A%2F%2Fnavendu.me%2Fnsfw-filter%2Findex.html)
 <!-- Describe your project in brief -->
 
+## Description
+Built this personal project to learn and apply the following
+- Firebase Auth : Sign in, Sign up and Sign out
+- Firebase Firestore : Upload & Retrieve data stored in Cloud Firestore
+- Perform simple and compound queries in Cloud Firestore
+- Building Complex UI
+- Shared Preference to keep user logged in, Create chat room ( with username) & Send message ( by username)
+- Using Stream & Stream builder
+
 ## Demo
 ![Gif Demo](https://media.giphy.com/media/Wb7MIIn6Pk07X93ws4/giphy.gif)
 
@@ -24,3 +33,6 @@ Fully Functioning Chat App with Flutter & Firebase
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
+
+## Acknowledgement
+Shout out to [Sanskari Tiwari's](https://github.com/theindianappguy) youtube channel which helped me kickstart the project.
